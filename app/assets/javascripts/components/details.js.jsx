@@ -23,7 +23,10 @@ var DetailCard = React.createClass({
 		// having to escape the period for lat which is a float
 		var atmId = atm.lat.replace(/\./g,'');
 
+		// since scripting in the template is difficult,
+		// its more convenient to parse the array of services here
 		var services = atm.services.join(', ');
+		
 		// code here is hacky and redundant since
 		// react, unfortunately, does not allow inline scripting
 		// except for single line statements

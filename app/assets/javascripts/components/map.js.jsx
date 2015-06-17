@@ -18,6 +18,9 @@ var MapBox = React.createClass({
         var lat, lng;
         var self = this;
 
+        // simple change of html to indicate that the
+        // application is loading since geolocations
+        // takes a couple of seconds.
         $('.find-btn').html('Loading...');
 
         function requestCurrentPosition() {
@@ -38,7 +41,7 @@ var MapBox = React.createClass({
             lng = position.coords.longitude;
             lat = position.coords.latitude;
             onLocationReady();
-        }
+        };
 
         // sends coordinates to server while the server
         // parses the data, queries the chase api and returns
@@ -90,6 +93,7 @@ var MapBox = React.createClass({
                 url = "https://m.chase.com/PSRWeb/location/list.action?lat=" + lat + "&lng=" + lng;
 
             // map each atm location in to its own detail-card component
+            // with data as a prop
             var atmCards = this.state.atmLocations.locations.map(function(atm) { 
                 return (
                     <DetailCard data={atm}/>
