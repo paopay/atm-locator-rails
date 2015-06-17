@@ -76,7 +76,7 @@ var DetailCard = React.createClass({
 						<div className='col-md-8 col-md-offset-2'>
 							<h4>ATM Information</h4>
 							<div className='col-md-6'>
-								<p><b>Number of ATMs:</b> {atm.atms !== 'undefined' ? atm.atms : 'N/A'}</p>
+								<p><b>Number of ATMs:</b> {atm.atms !== undefined ? atm.atms : 'N/A'}</p>
 							</div>
 						</div>
 						<div className='col-md-8 col-md-offset-2'>
@@ -107,7 +107,7 @@ var DetailCard = React.createClass({
 						<div className='col-md-8 col-md-offset-2'>
 							<h4>ATM Information</h4>
 							<div className='col-md-6'>
-								<p><b>Number of ATMs:</b> {atm.atms !== 'undefined' ? atm.atms : 'N/A'}</p>
+								<p><b>Number of ATMs:</b> {atm.atms !== undefined ? atm.atms : 'N/A'}</p>
 							</div>
 							<div className='col-md-6'>
 								<p><b>Services:</b> {atm.services.length > 0 ? services : "N/A"}</p>
