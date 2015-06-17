@@ -1,18 +1,22 @@
 class PagesController < ApplicationController
 	def index
+
 	end
 
 	def find_location
 		p params
-		@coords = load_data_with_httparty(params[:lat], params[:lng])
-		respond_to do |format|
-			format.html { render "index", locals: { coords: @coords } }
-		end
+		@data = {}
+		@data = load_data_with_httparty(params[:lat], params[:lng])
+		render json: @data
 	end
 
 	private
 
 	def load_data_with_httparty(lat, lng)
-		response = HTTParty.get("https://m.chase.com/PSRWeb/location/list.action?lat=#{lat}&lng=#{lng}")
+		data = {}
+		data[:atm_locations] = HTTParty.get("https://m.chase.com/PSRWeb/location/list.action?lat=#{lat}&lng=#{lng}")
+		data[:lat] = lat
+		data[:lng] = lng
+		data
 	end
 end

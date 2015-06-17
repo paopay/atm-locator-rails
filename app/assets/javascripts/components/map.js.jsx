@@ -6,6 +6,15 @@
 // this component contains all elements
 // and components for the map page
 var MapBox = React.createClass({
+    // setting the atmLocations state to
+    // undefined allows the component to
+    // keep track when the state changes to
+    // contain relevant data
+    getInitialState: function() {
+        return {
+            atmLocations: undefined
+        };
+    },
     // this is a very hacky way of sending lat and lng vars
     // to the server. so far, this is the only way i've
     // found to extract coordinates from within the
@@ -14,6 +23,7 @@ var MapBox = React.createClass({
     _handleClick: function(e) {
         e.preventDefault();
         var lat, lng;
+        var self = this;
 
         function requestCurrentPosition() {
             if (navigator.geolocation) {
@@ -21,37 +31,41 @@ var MapBox = React.createClass({
             }
         }
 
-        function useGeoData(position){
+        function useGeoData(position) {
             lng = position.coords.longitude;
             lat = position.coords.latitude;
             onLocationReady();
         }
 
         function onLocationReady() {
-            console.log(lat, lng);
             $.ajax({
                 url: '/find-location',
                 data: {'lat': lat, 'lng': lng},
                 method: 'POST',
                 success: function(data) {
-                    console.log('success');
-
+                    self.setState({
+                        atmLocations   : data['atm_locations'],
+                        lat            : data['lat'],
+                        lng            : data['lng']
+                    });
                 },
                 error: function(xhr, status, err) {
                     console.error(url, status, err.toString());
-                }.bind(this)
+                }
             });
         }
 
         requestCurrentPosition();
     },
-    // if the coords have been loaded in it renders the map
-    // otherwise, it will render the 'find atm' button 
+    // if the coords have been loaded in from the server
+    // it rerenders with the map otherwise, it
+    // will just render the 'find atm' button 
 	render: function() {
-        if (false) {
+        console.log('rendered');
+        if (typeof this.state.atmLocations !== 'undefined') {
             return (
                 <div className="mapBox">
-                    <GoogleMap url="https://m.chase.com/PSRWeb/location/list.action?" />
+                    <GoogleMap url="https://m.chase.com/PSRWeb/location/list.action?"  />
                 </div>
             );
         } else {

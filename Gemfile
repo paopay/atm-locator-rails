@@ -45,6 +45,7 @@ group :development, :test do
 
   # gui for debug
   gem 'better_errors'
+  gem "binding_of_caller"
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
