@@ -87,9 +87,17 @@ var MapBox = React.createClass({
                 lng = this.state.lng,
                 url = "https://m.chase.com/PSRWeb/location/list.action?lat=" + lat + "&lng=" + lng;
 
+            // map each atm location in to its own detail-card component
+            var atmCards = this.state.atmLocations.locations.map(function(atm) { 
+                return (
+                    <DetailCard data={atm}/>
+                ); 
+            });
+
             return (
                 <div className="mapBox">
                     <GoogleMap url={url} atmLocations={this.state.atmLocations} lat={lat} lng={lng} />
+                    {atmCards}
                 </div>
             );
         } else {
@@ -134,6 +142,9 @@ var GoogleMap = React.createClass({
 
         // pinning markers and setting up details for each location
         // that is near the user's location
+        //
+        // i would have wanted to extract the for loop and the
+        // different functions in it for better separation of concern.
         for(var i=0; i < atmLocations.length; i++) {
             var atm = atmLocations[i];
 
@@ -153,6 +164,14 @@ var GoogleMap = React.createClass({
                     atmInfowindow.open(map, marker);
                 }
             })(marker, i));
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    // clicking on pin returns a details page for 
+                    // the atm location
+
+                }
+            })(marker, i));
         }
 
         // sets map to state so it can be accessed by self
@@ -161,7 +180,7 @@ var GoogleMap = React.createClass({
     },
     render: function () {
         return (
-        	<div className='googleMap'></div>
+                <div className='googleMap'></div>
         );
     }
 });
