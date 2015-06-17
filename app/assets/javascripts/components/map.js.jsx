@@ -97,7 +97,9 @@ var MapBox = React.createClass({
             return (
                 <div className="mapBox">
                     <GoogleMap url={url} atmLocations={this.state.atmLocations} lat={lat} lng={lng} />
-                    {atmCards}
+                    <div className="tab-content">
+                        {atmCards}
+                    </div>
                 </div>
             );
         } else {
@@ -150,7 +152,8 @@ var GoogleMap = React.createClass({
 
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(atm.lat, atm.lng),
-                map: map
+                map: map,
+                href: atm.lat
             });
 
             google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
@@ -169,7 +172,13 @@ var GoogleMap = React.createClass({
                 return function() {
                     // clicking on pin returns a details page for 
                     // the atm location
-
+                    var atm = atmLocations[i];
+                    // hacky way of getting a unique id without having
+                    // to escape the period in the float
+                    var atmId = atm.lat.replace(/\./g, '');
+                    // hides the map to make way for detail page
+                    $('.googleMap').hide();
+                    $('#'+atmId).show();
                 }
             })(marker, i));
         }
@@ -184,3 +193,17 @@ var GoogleMap = React.createClass({
         );
     }
 });
+
+
+
+// <div>
+
+//   <!-- Nav tabs -->
+//   <ul className="nav nav-tabs" role="tablist">
+//     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+//     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+//     <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+//     <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+//   </ul>
+
+// </div>
