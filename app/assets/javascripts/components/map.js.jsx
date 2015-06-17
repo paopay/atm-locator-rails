@@ -18,6 +18,8 @@ var MapBox = React.createClass({
         var lat, lng;
         var self = this;
 
+        $('.find-btn').html('Loading...');
+
         function requestCurrentPosition() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(useGeoData);
