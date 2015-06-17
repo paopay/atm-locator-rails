@@ -6,14 +6,24 @@
 // i would've broken this component down in to
 // smaller and more manageable components with more time
 var DetailCard = React.createClass({
+	// hides the detail card and shows the map again
+	_handleClick: function(e) {
+		e.preventDefault();
+		// this piece of code is often repeated
+		// i would wrap it in a function given more time
+		var atm = this.props.data
+		var atmId = atm.lat.replace(/\./g,'');
+
+		$('#'+atmId).hide();
+		$('.googleMap').show();
+	},
 	render: function() {
 		var atm = this.props.data
 		// hacky way to get a unique id for atm without
 		// having to escape the period for lat which is a float
 		var atmId = atm.lat.replace(/\./g,'');
 
-		var services = atm.services.join('\n');
-		console.log(services);
+		var services = atm.services.join(', ');
 		// code here is hacky and redundant since
 		// react, unfortunately, does not allow inline scripting
 		// except for single line statements
@@ -33,8 +43,9 @@ var DetailCard = React.createClass({
 								<p>{atm.phone}</p></b>
 							</div>
 							<div className='col-md-6'>
-								<p><b>Type:</b> {atm['type']}</p>
-								<p><b>Distance:</b> {atm.distance}</p>
+								<p><b>Location Type:</b> {atm.locType}</p>
+								<p><b>Type:</b> {atm['type'] ? atm['type'] : "N/A"}</p>
+								<p><b>Distance:</b> {atm.distance} miles</p>
 							</div>
 						</div>
 						<div className='col-md-8 col-md-offset-2'>
@@ -68,8 +79,13 @@ var DetailCard = React.createClass({
 								<p><b>Number of ATMs:</b> {atm.atms}</p>
 							</div>
 							<div className='col-md-6'>
-								<p><b>Services:</b> {atm.services.length > 0 ? services : ""}</p>
+								<p><b>Services:</b> {atm.services.length > 0 ? services : "N/A"}</p>
 							</div>
+						</div>
+						<div className='col-md-8 col-md-offset-2'>
+							<button className="back-btn center-block btn btn-primary" type="submit" onClick={this._handleClick}>
+							    Back to Results
+							</button>
 						</div>
 					</div>
 				</div>
@@ -87,16 +103,24 @@ var DetailCard = React.createClass({
 								<p>{atm.phone}</p></b>
 							</div>
 							<div className='col-md-6'>
-								<p><b>Type:</b> {atm['type']}</p>
-								<p><b>Distance:</b> {atm.distance}</p>
+								<p><b>Location Type:</b> {atm.locType}</p>
+								<p><b>Type:</b> {atm['type'] ? atm['type'] : "N/A"}</p>
+								<p><b>Distance:</b> {atm.distance} miles</p>
 							</div>
 						</div>
 						<div className='col-md-8 col-md-offset-2'>
 							<h4>ATM Information</h4>
 							<div className='col-md-6'>
 								<p><b>Number of ATMs:</b> {atm.atms}</p>
-								<p><b>{atm.services.length > 0 ? "Services:" + atm.services.join('\n') : ""}:</b> {atm.distance}</p>
 							</div>
+							<div className='col-md-6'>
+								<p><b>Services:</b> {atm.services.length > 0 ? services : "N/A"}</p>
+							</div>
+						</div>
+						<div className='col-md-8 col-md-offset-2'>
+							<button className="back-btn center-block btn btn-primary" type="submit" onClick={this._handleClick}>
+							    Back to Results
+							</button>
 						</div>
 					</div>
 				</div>
