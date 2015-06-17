@@ -1,0 +1,20 @@
+/* 
+ * given more time, i would have used a 
+ * css framework (sass/less) to better
+ * organize my css and be more efficient.
+ * 
+ * also, i would have separated the css
+ * in to different files based on what
+ * elements are being styled.
+*/
+
+html, body, #content {
+	height: 100%;
+	margin: 10px 30px;
+	padding: 0px;
+}
+
+.googleMap {
+    height: 500px;
+    width: 500px;
+}
