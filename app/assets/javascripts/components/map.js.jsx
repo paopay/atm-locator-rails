@@ -152,7 +152,7 @@ var GoogleMap = React.createClass({
                     atmInfowindow.setContent(details);
                     atmInfowindow.open(map, marker);
                 }
-             })(marker, i));
+            })(marker, i));
         }
 
         // sets map to state so it can be accessed by self
